@@ -4,3 +4,4 @@
 ~ un exemplu neinspirat: NI SE INVART ROTITELE ~
 - in loggo ar trebui sa se regaseasca Rotitele, putem cere ajutorul unora care stiu desena
 - decoram robotul sa fie ca o locomotiva si mascota sa fie conductorul ei
+- am putea administra un site in care sa prezentam echipa si sa lasam date de contact pt cei doritori sa afle mai mult, dar asta o putem face ai cu ajutorul fb

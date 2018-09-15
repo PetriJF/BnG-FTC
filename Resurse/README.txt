@@ -11,3 +11,4 @@ am-1419 300 nylock
 W39097 surube
 REV-41-1365 -Lant #25
 REV-41-1366 -linkuri pt lant
+W39104 - imbusuri X10

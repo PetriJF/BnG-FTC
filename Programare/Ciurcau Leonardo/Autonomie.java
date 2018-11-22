@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.vuforia.HINT;
 import com.vuforia.Image;
@@ -32,13 +33,15 @@ public class Autonomie extends LinearOpMode
 {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private int imageWidth, imageHeight, scale = 8, left = 0, center = 1, right = 2;
+    private int imageWidth, imageHeight, scale = 4, left = 0, center = 1, right = 2;
     private boolean[][] cube_color, lee_matrix;
     private DcMotor motorLeft1 = null;
     private DcMotor motorRight1 = null;
     private DcMotor motorLeft2 = null;
     VuforiaLocalizer vuforia;
     private DcMotor motorRight2 = null;
+    private Servo markerRelease = null;
+
 
     private Object obj;
     private byte[] pixelArray;
@@ -106,6 +109,9 @@ public class Autonomie extends LinearOpMode
         motorRight2 = hardwareMap.dcMotor.get("motorRight2");
         initRotateTick = motorRight1.getCurrentPosition();
 
+        markerRelease = hardwareMap.servo.get("markerRelease");
+        markerRelease.setPosition(0.25f);
+
         telemetry.addData("Initialized", "");
 
     }
@@ -146,9 +152,10 @@ public class Autonomie extends LinearOpMode
 
     private int XToAngle(int x)
     {
+        int maxInch = 8;
         boolean minus = (x > imageWidth / 2);
         if (minus) x = imageWidth - x;
-        double angle0 = (int)((double)(8) - (double)(16) * ( (double)(x) / (double)(imageWidth) ));
+        double angle0 = (int)((double)(maxInch) - (double)(2 * maxInch) * ( (double)(x) / (double)(imageWidth) ));
         if ( (angle0) - (int)(angle0) >= 0.5) angle0 = (int)(angle0 + 1);
         if (minus) angle0 = -angle0;
         return (int)angle0;
@@ -247,8 +254,12 @@ public class Autonomie extends LinearOpMode
     public void MoveMineral()
     {
 
+        if (moveAngle < 3 && moveAngle > -3) S = "CENTER";
+        else if (moveAngle < -3) S = "RIGHT";
+        else S = "LEFT";
+
         encoderDrive(TURN_SPEED, -(moveAngle + 1), moveAngle + 1, 10);
-        if (moveAngle < 3 && moveAngle > -3)
+        if (S == "CENTER")
             encoderDrive(DRIVE_SPEED, 25, 25, 3);
         else
             encoderDrive(DRIVE_SPEED, 27, 27, 3);
@@ -283,7 +294,10 @@ public class Autonomie extends LinearOpMode
         encoderDrive(DRIVE_SPEED, 42, 42, 10);
         encoderDrive(TURN_SPEED, -1, 1, 10);
 
-        sleep(1000);
+
+        markerRelease = hardwareMap.servo.get("markerRelease");
+        markerRelease.setPosition(0.25f);
+
         encoderDrive(-DRIVE_SPEED, -35, -35, 15);
         encoderDrive(-1, -45, -45, 15);
 

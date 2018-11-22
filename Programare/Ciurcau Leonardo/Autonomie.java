@@ -258,12 +258,11 @@ public class Autonomie extends LinearOpMode
         else if (moveAngle < -3) S = "RIGHT";
         else S = "LEFT";
 
-        encoderDrive(TURN_SPEED, -(moveAngle + 1), moveAngle + 1, 10);
+        encoderDrive(TURN_SPEED, -moveAngle, moveAngle, 10);
         if (S == "CENTER")
-            encoderDrive(DRIVE_SPEED, 25, 25, 3);
+            encoderDrive(DRIVE_SPEED, 22, 22, 3);
         else
             encoderDrive(DRIVE_SPEED, 27, 27, 3);
-        encoderDrive(-DRIVE_SPEED, -10, -10, 3);
 
         telemetry.addData("Angle", Angle);
         telemetry.update();
@@ -272,34 +271,23 @@ public class Autonomie extends LinearOpMode
 
     public void GoToDepot()
     {
-        if(S == "LEFT" || S == "NONE")
-        {
-            encoderDrive(TURN_SPEED, -8, 8, 10);
-            encoderDrive(DRIVE_SPEED, 31, 31, 5);
-            //encoderDrive(DRIVE_SPEED, 20, 20, 3);
-        }
-        else if (S == "RIGHT")
-        {
-            encoderDrive(TURN_SPEED, -16, 16, 10);
-            encoderDrive(DRIVE_SPEED, 43, 43, 5);
+        if(S == "LEFT" || S == "RIGHT")
+            encoderDrive(-DRIVE_SPEED, -27, -27, 3);
 
-        }
         else
-        {
-            encoderDrive(TURN_SPEED, -12, 12, 10);
-            encoderDrive(DRIVE_SPEED, 37, 37, 5);
+            encoderDrive(-DRIVE_SPEED, -25, -25, 3);
 
-        }
-        encoderDrive(TURN_SPEED, -8, 8, 10);
-        encoderDrive(DRIVE_SPEED, 42, 42, 10);
-        encoderDrive(TURN_SPEED, -1, 1, 10);
+        encoderDrive(TURN_SPEED, moveAngle, -moveAngle, 10);
 
+        encoderDrive(TURN_SPEED, -7, 7, 10);
+        encoderDrive(DRIVE_SPEED, cmToInches(60), cmToInches(60), 10);
+        encoderDrive(TURN_SPEED, -12, 12, 10);
+        encoderDrive(DRIVE_SPEED, cmToInches(130), cmToInches(130), 10);
 
-        markerRelease = hardwareMap.servo.get("markerRelease");
-        markerRelease.setPosition(0.25f);
+        markerRelease.setPosition(1f);
 
-        encoderDrive(-DRIVE_SPEED, -35, -35, 15);
-        encoderDrive(-1, -45, -45, 15);
+        //encoderDrive(-DRIVE_SPEED, -35, -35, 15);
+       // encoderDrive(-1, -45, -45, 15);
 
 
     }

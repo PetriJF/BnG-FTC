@@ -64,8 +64,9 @@ public class BasicOpMode_Linear extends LinearOpMode {
     private DcMotor motorLeft2 = null;
     private DcMotor motorRight2 = null;
     private DcMotor CubeRiser = null;
-    private Servo mineralRelease = null;
+    private Servo markerRelease = null;
     private Servo mineralFlip = null;
+    private Servo mineralRelease = null;
     private DcMotor motorExtendSucker = null;
     private DcMotor motorSucker = null;
     IntegratingGyroscope gyro;
@@ -90,8 +91,10 @@ public class BasicOpMode_Linear extends LinearOpMode {
         Init();
 
         waitForStart();
+
         runtime.reset();
 
+        mineralFlip.setPosition(0.04);
         while (opModeIsActive())
         {
 
@@ -146,15 +149,18 @@ public class BasicOpMode_Linear extends LinearOpMode {
         CubeRiser = hardwareMap.dcMotor.get("CubeRiser");
         mineralRelease = hardwareMap.servo.get("mineralRelease");
         mineralFlip = hardwareMap.servo.get("mineralFlip");
+        markerRelease = hardwareMap.servo.get("markerRelease");
         //CubeRiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //CubeRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Elevator = hardwareMap.dcMotor.get("LaunchMotor");
         motorExtendSucker = hardwareMap.dcMotor.get("motorExtendSucker");
         motorSucker = hardwareMap.dcMotor.get("motorSucker");
         motorSucker.setDirection(DcMotor.Direction.FORWARD);
+        motorExtendSucker.setDirection(DcMotor.Direction.FORWARD);
 
         mineralRelease.setPosition(0.75f);
-        mineralFlip.setPosition(0.33f);
+        mineralFlip.setPosition(0.45f);
+        markerRelease.setPosition(1f);
         cubeRiserPos = CubeRiser.getCurrentPosition();
         suckerExtendPos = motorExtendSucker.getCurrentPosition();
         modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
@@ -284,38 +290,52 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
     private void CubeRising()
     {
-            if (gamepad2.left_bumper && cubeRiserStatus)
+            if (gamepad2.left_bumper && cubeRiserStatus )
             {
                 cubeRiserStatus = false;
                 CubeRiser.setTargetPosition(CubeRiser.getCurrentPosition() + CubeRiserMax);
                 CubeRiser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 CubeRiser.setPower(0.3f);
+                while (CubeRiser.isBusy())
+                {
+                    sleep(10);
+                }
                 CubeRiser.setPower(0f);
                 CubeRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
             }
-            else if (gamepad2.left_bumper && !cubeRiserStatus)
+            else if (gamepad2.left_bumper && !cubeRiserStatus  )
             {
-                cubeRiserStatus = false;
+                cubeRiserStatus = true;
                 CubeRiser.setTargetPosition(cubeRiserPos);
                 CubeRiser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 CubeRiser.setPower(0.3f);
+                while (CubeRiser.isBusy())
+                {
+                    sleep(10);
+                }
                 CubeRiser.setPower(0f);
+                sleep(100);
                 CubeRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
             else CubeRiser.setPower(0f);
+
+            telemetry.addData("BumperStatus", gamepad2.left_bumper);
 
             if (gamepad2.a)
             {
                 if (mineralFlipStatus == false)
                 {
-                    mineralFlip.setPosition(0.05f);
+                    mineralFlip.setPosition(0.58f);
                     mineralFlipStatus = true;
+                    sleep(200);
                 }
                 else
                 {
-                    mineralFlip.setPosition(0.33f);
+                    mineralFlip.setPosition(0.04f);
                     mineralFlipStatus = false;
+                    sleep(200);
                 }
             }
 
@@ -325,7 +345,6 @@ public class BasicOpMode_Linear extends LinearOpMode {
     {
         if(gamepad2.y)
             motorSucker.setPower(1f);
-
         else motorSucker.setPower(0f);
 
     }
@@ -334,15 +353,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
     {
         if(gamepad2.dpad_up && motorExtendSucker.getCurrentPosition() < suckerExtendMax + suckerExtendPos)
         {
-            motorExtendSucker.setDirection(DcMotor.Direction.FORWARD);
             motorExtendSucker.setPower(0.5f);
         }
         else if(gamepad2.dpad_down)
         {
-            motorExtendSucker.setDirection(DcMotor.Direction.REVERSE);
-            motorExtendSucker.setPower(0.5f);
+            motorExtendSucker.setPower(-0.5f);
         }
-
         else motorExtendSucker.setPower(0f);
     }
 

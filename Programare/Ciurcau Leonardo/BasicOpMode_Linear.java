@@ -337,7 +337,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             motorExtendSucker.setDirection(DcMotor.Direction.FORWARD);
             motorExtendSucker.setPower(0.5f);
         }
-        else if(gamepad2.dpad_down && Math.abs(motorExtendSucker.getCurrentPosition()) > suckerExtendPos)
+        else if(gamepad2.dpad_down)
         {
             motorExtendSucker.setDirection(DcMotor.Direction.REVERSE);
             motorExtendSucker.setPower(0.5f);

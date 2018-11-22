@@ -2,6 +2,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.vuforia.HINT;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -30,6 +31,7 @@ public class Autonomie_Depot extends LinearOpMode
     private DcMotor motorLeft2 = null;
     VuforiaLocalizer vuforia;
     private DcMotor motorRight2 = null;
+    private Servo markerRelease = null;
 
     private Object obj;
     private byte[] pixelArray;
@@ -67,8 +69,6 @@ public class Autonomie_Depot extends LinearOpMode
 
         MoveMineral();
         GoToDepot();
-        // PlaceMarker();
-
     }
 
     public void Init()
@@ -96,6 +96,8 @@ public class Autonomie_Depot extends LinearOpMode
         motorLeft2 = hardwareMap.dcMotor.get("motorLeft2");
         motorRight1 = hardwareMap.dcMotor.get("motorRight1");
         motorRight2 = hardwareMap.dcMotor.get("motorRight2");
+        markerRelease = hardwareMap.servo.get("markerRelease");
+        markerRelease.setPosition(0.25f);
         initRotateTick = motorRight1.getCurrentPosition();
 
         telemetry.addData("Initialized", "");
@@ -138,9 +140,10 @@ public class Autonomie_Depot extends LinearOpMode
 
    private int XToAngle(int x)
    {
+       int maxInch = 8;
        boolean minus = (x > imageWidth / 2);
        if (minus) x = imageWidth - x;
-       double angle0 = (int)((double)(8) - (double)(16) * ( (double)(x) / (double)(imageWidth) ));
+       double angle0 = (int)((double)(maxInch) - (double)(2 * maxInch) * ( (double)(x) / (double)(imageWidth) ));
        if ( (angle0) - (int)(angle0) >= 0.5) angle0 = (int)(angle0 + 1);
        if (minus) angle0 = -angle0;
        return (int)angle0;
@@ -252,10 +255,16 @@ public class Autonomie_Depot extends LinearOpMode
 
         encoderDrive(TURN_SPEED, -moveAngle, moveAngle, 10);
 
-        if (moveAngle < 3 && moveAngle > -3)
-            encoderDrive(DRIVE_SPEED, 25, 25, 3);
-        else
-            encoderDrive(DRIVE_SPEED, 27, 27, 3);
+        if (moveAngle < 3 && moveAngle > -3) S = "CENTER";
+        else if (moveAngle < -3) S = "RIGHT";
+        else S = "LEFT";
+
+        if (S == "CENTER")
+            encoderDrive(DRIVE_SPEED, 75, 75, 3);
+        else if (S == "LEFT")
+            encoderDrive(DRIVE_SPEED, 44, 44, 3);
+        else if (S == "RIGHT")
+            encoderDrive(DRIVE_SPEED, 47, 47, 3);
 
         telemetry.addData("Angle", Angle);
         telemetry.update();
@@ -264,33 +273,30 @@ public class Autonomie_Depot extends LinearOpMode
 
     public void GoToDepot()
     {
-        if(S == "LEFT" || S == "NONE")
-        {
+        encoderDrive(TURN_SPEED, moveAngle, -moveAngle, 10);
+
+        if (S == "RIGHT")
+            encoderDrive(TURN_SPEED, -6, 6, 10);
+        else if (S == "LEFT")
             encoderDrive(TURN_SPEED, 6, -6, 10);
-            encoderDrive(DRIVE_SPEED, cmToInches(70), cmToInches(70), 5);
-        }
-        else if (S == "RIGHT")
-        {
-            encoderDrive(TURN_SPEED, -7, 7, 10);
-            encoderDrive(DRIVE_SPEED, cmToInches(70), cmToInches(70), 5);
-
-        }
-        else
-        {
-            encoderDrive(DRIVE_SPEED, cmToInches(50), cmToInches(50), 5);
-            encoderDrive(TURN_SPEED, -7, 7, 10);
-
-
-        }
-
         sleep(1000);
 
-        if(S == "CENTER")
-            encoderDrive(TURN_SPEED, 11, -11, 10);
-        else if (S == "RIGHT")
-            encoderDrive(TURN_SPEED, -11, 11, 10);
-       // encoderDrive(-0.9, -cmToInches(100), -cmToInches(100), 15);
+       // if(S == "CENTER")
+          //  encoderDrive(TURN_SPEED, 11, -11, 10);
+        if (S == "RIGHT" || S == "LEFT")
+            encoderDrive(TURN_SPEED, cmToInches(60), cmToInches(60), 10);
 
+        markerRelease.setPosition(1f);
+
+        /*if (S == "CENTER")
+            encoderDrive(TURN_SPEED, 12, -12, 10);
+        // encoderDrive(-0.9, -cmToInches(100), -cmToInches(100), 15);
+        if(S == "RIGHT")
+            encoderDrive(TURN_SPEED, 19, -19, 10);
+        if (S == "LEFT")
+            encoderDrive(TURN_SPEED, 5, -5, 10);
+
+        encoderDrive(-TURN_SPEED, -70, -70, 10);*/
 
     }
 
@@ -564,6 +570,7 @@ public class Autonomie_Depot extends LinearOpMode
         int maxTick = 2300;
         return maxTick * degrees / 360;
     }
+
 
 }
 

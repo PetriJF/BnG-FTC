@@ -140,7 +140,7 @@ public class Autonomie_Depot extends LinearOpMode
    {
        boolean minus = (x > imageWidth / 2);
        if (minus) x = imageWidth - x;
-       double angle0 = (int)((double)(7) - (double)(14) * ( (double)(x) / (double)(imageWidth) ));
+       double angle0 = (int)((double)(8) - (double)(16) * ( (double)(x) / (double)(imageWidth) ));
        if ( (angle0) - (int)(angle0) >= 0.5) angle0 = (int)(angle0 + 1);
        if (minus) angle0 = -angle0;
        return (int)angle0;

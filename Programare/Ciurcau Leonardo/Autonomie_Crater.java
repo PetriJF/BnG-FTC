@@ -58,9 +58,9 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomie Depot", group="Linear Opmode")
+@Autonomous(name="Autonomie Crater", group="Linear Opmode")
 //@Disabled
-public class Autonomie_Depot extends LinearOpMode {
+public class Autonomie_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -95,52 +95,54 @@ public class Autonomie_Depot extends LinearOpMode {
 
         waitForStart();
 
-
         StopTF();
-       // robot.latching(1400);
-       // EncoderStrafe(DRIVE_SPEED, 3, 3, 3);
-        encoderDrive(DRIVE_SPEED,15, 15, 3);
+       // robot.coborare();
+        //MineralPhase();
+        //robot.latching(1400);
+        //EncoderStrafe(DRIVE_SPEED, 3, 3, 3);
+        encoderDrive(DRIVE_SPEED,11, 11, 3);
         encoderDrive(DRIVE_SPEED, -21, 21, 3);
 
         if(position == "RIGHT")
         {
             encoderDrive(-DRIVE_SPEED, -9, -9, 3);
-            EncoderStrafe(DRIVE_SPEED, 20, 20, 10); // loveste cubul
+            EncoderStrafe(DRIVE_SPEED, 20, 20, 3); // loveste cubul
             sleep(200);
-            EncoderStrafe(-DRIVE_SPEED,-8, -8, 10); // se retrage
+            EncoderStrafe(-DRIVE_SPEED,-8, -8, 3); // se retrage
             encoderDrive(DRIVE_SPEED,55, 55, 3); // merge catre perete
 
         }
 
         else if (position == "CENTER")
         {
-           // encoderDrive(DRIVE_SPEED, 4,4,3); // se aliniaza cu cubul
-            EncoderStrafe(DRIVE_SPEED, 25, 25, 10); // loveste cubul
+            // encoderDrive(DRIVE_SPEED, 4,4,3); // se aliniaza cu cubul
+            EncoderStrafe(DRIVE_SPEED, 25, 25, 3); // loveste cubul
             sleep(200);
-            EncoderStrafe(-DRIVE_SPEED,-10, -10, 10);// se retrage
+            EncoderStrafe(-DRIVE_SPEED,-10, -10, 3);// se retrage
             encoderDrive(DRIVE_SPEED, 31, 31,3); // merge catre perete
         }
 
         else {
             encoderDrive(DRIVE_SPEED, 25, 25, 3); // se aliniaza cu cubul
-            EncoderStrafe(DRIVE_SPEED, 25, 25, 10); // loveste cubul
+            EncoderStrafe(DRIVE_SPEED, 25, 25, 3); // loveste cubul
             sleep(200);
-            EncoderStrafe(-DRIVE_SPEED, -10, -10, 10);// se retrage
+            EncoderStrafe(-DRIVE_SPEED, -10, -10, 3);// se retrage
             encoderDrive(DRIVE_SPEED,22, 22, 3);// merge catre perete
         }
 
-        encoderDrive(DRIVE_SPEED, -10,10, 3); // se roteste pt a fi cu spatele la depot
-        EncoderStrafe(DRIVE_SPEED, 9, 9, 3); //merge catre perete pt a se alinia
-        EncoderStrafe(-DRIVE_SPEED, -3,-3,3); // se intoarce pt a nu se bloca de perete
-        encoderDrive(-DRIVE_SPEED, -55, -55, 10);
+        encoderDrive(DRIVE_SPEED, 38,-38, 3); // se roteste pt a fi cu spatele la depot
+       // EncoderStrafe(DRIVE_SPEED, 9, 9, 3);
+        //EncoderStrafe(-DRIVE_SPEED, -3,-3,3); // se intoarce pt a nu se bloca de perete
+       // encoderDrive(-DRIVE_SPEED, -55, -55, 3);
         robot.plasareMarker();
-        sleep(500);
+        sleep(200);
         robot.inchidereMarker(); // pune marker^
-        encoderDrive(DRIVE_SPEED, 63, 63, 10);// pleaca la crater
+        encoderDrive(DRIVE_SPEED, 63, 63, 4);// pleaca la crater
         //ExtendSucker (300); // parcheaza
 
 
-       // MineralPhase();
+
+
 
 
         //ExtendSucker(200);
@@ -175,74 +177,53 @@ public class Autonomie_Depot extends LinearOpMode {
 
     private void MineralPhase()
     {
-       // encoderDrive(DRIVE_SPEED, 8, 8, 4);
-        robot.ExtendSucker(1050);
+        encoderDrive(DRIVE_SPEED, 15, 15, 4);
+        if(position == "LEFT")
+            EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
+        else if (position == "RIGHT")
+            EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
+
+        //robot.flipDown();
         sleep(500);
-        robot.scuipare();
-        sleep(700);
+        robot.sugere();
+        sleep(500);
         robot.stopSugere();
+        sleep(250);
+        //robot.flipUp();
 
-        if(position == "CENTER")
-        {
-            robot.ExtendSucker(-550);
-            sleep(500);
-            //robot.flipDown();
-            sleep(500);
-            robot.sugere();
-            sleep(500);
-            robot.stopSugere();
-            sleep(500);
-            //robot.flipUp();
-            robot.ExtendSucker(-500);
-        }
+        encoderDrive(-DRIVE_SPEED, -2, -2, 3);
+        if(position == "RIGHT")
+            EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
+        else if (position == "LEFT")
+            EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
 
-        else
-            {
-                robot.ExtendSucker(-1050);
+        robot.ExtendSucker(700);
+        //robot.flipDown();
+        sleep(500);
+        robot.sugere();
+        sleep(500);
+        robot.stopSugere();
+        sleep(500);
+        //robot.flipUp();
+        sleep(250);
+        robot.ExtendSucker(-700);
+        encoderDrive(-DRIVE_SPEED, -8, -8, 3);
+        EncoderStrafe(DRIVE_SPEED, 8, 8, 5);
+        //plasare
+        sleep(1000);
+        encoderDrive(DRIVE_SPEED, 14, 14, 5);
 
-                encoderDrive(DRIVE_SPEED, 14, 14, 4);
+        EncoderStrafe(DRIVE_SPEED, 23, 23, 5);
 
-                if (position == "LEFT")
-                    EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
-                else if (position == "RIGHT")
-                    EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
+        encoderDrive(DRIVE_SPEED, 11, -11, 3);
+        EncoderStrafe(DRIVE_SPEED, 34, 34, 3);
+        EncoderStrafe(-DRIVE_SPEED, -3, -3, 1);
+        encoderDrive(-(DRIVE_SPEED + 0.3), -55, -55, 3);
+        sleep(1000);
+        //marker
+        encoderDrive((DRIVE_SPEED + 0.3), 55, 55, 3);
 
-
-                sleep(250);
-                robot.ExtendSucker(400);
-                //robot.flipDown();
-                sleep(250);
-                robot.sugere();
-                sleep(500);
-                robot.stopSugere();
-                sleep(250);
-                //robot.flipUp();
-                sleep(250);
-                robot.ExtendSucker(-250);
-
-                if (position == "LEFT")
-                    EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
-                else if (position == "RIGHT")
-                    EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
-
-                // encoderDrive(-DRIVE_SPEED, -10,-10,4);
-            }
-
-
-
-
-
-       // encoderDrive(DRIVE_SPEED,8,8,4);
-        encoderDrive(DRIVE_SPEED, -15, 15,4);
-        encoderDrive(DRIVE_SPEED, 46, 46, 4);
-        encoderDrive(DRIVE_SPEED, -9, 9, 4);
-
-
-        //if (position == "RIGHT")
-        //ExtendSucker(450);
-        // else ExtendSucker(300);
     }
-
     public void initTF()
     {
         initVuforia();
@@ -306,10 +287,10 @@ public class Autonomie_Depot extends LinearOpMode {
                     }
 
 
+                        }
+                    }
                 }
             }
-        }
-    }
 
 
 
@@ -323,11 +304,11 @@ public class Autonomie_Depot extends LinearOpMode {
                              double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
-        robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorLeft2.setDirection(DcMotor.Direction.REVERSE);
+            robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
+            robot.motorLeft2.setDirection(DcMotor.Direction.REVERSE);
 
-        robot.motorRight1.setDirection(DcMotor.Direction.FORWARD);
-        robot.motorRight2.setDirection(DcMotor.Direction.FORWARD);
+            robot.motorRight1.setDirection(DcMotor.Direction.FORWARD);
+            robot.motorRight2.setDirection(DcMotor.Direction.FORWARD);
 
 
         robot.motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -401,8 +382,8 @@ public class Autonomie_Depot extends LinearOpMode {
     }
 
     public void EncoderStrafe(double speed,
-                              double leftInches, double rightInches,
-                              double timeoutS) {
+                             double leftInches, double rightInches,
+                             double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
         robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
@@ -474,5 +455,6 @@ public class Autonomie_Depot extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+
 
 }

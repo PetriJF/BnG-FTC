@@ -97,8 +97,8 @@ public class Autonomie_Depot extends LinearOpMode {
 
 
         StopTF();
-       // robot.latching(1400);
-       // EncoderStrafe(DRIVE_SPEED, 3, 3, 3);
+        //robot.latching(1400);
+        // EncoderStrafe(DRIVE_SPEED, 3, 3, 3);
         encoderDrive(DRIVE_SPEED,15, 15, 3);
         encoderDrive(DRIVE_SPEED, -21, 21, 3);
 
@@ -108,17 +108,17 @@ public class Autonomie_Depot extends LinearOpMode {
             EncoderStrafe(DRIVE_SPEED, 20, 20, 10); // loveste cubul
             sleep(200);
             EncoderStrafe(-DRIVE_SPEED,-8, -8, 10); // se retrage
-            encoderDrive(DRIVE_SPEED,55, 55, 3); // merge catre perete
+            encoderDrive(DRIVE_SPEED,51, 51, 3); // merge catre perete
 
         }
 
         else if (position == "CENTER")
         {
-           // encoderDrive(DRIVE_SPEED, 4,4,3); // se aliniaza cu cubul
+            // encoderDrive(DRIVE_SPEED, 4,4,3); // se aliniaza cu cubul
             EncoderStrafe(DRIVE_SPEED, 25, 25, 10); // loveste cubul
             sleep(200);
             EncoderStrafe(-DRIVE_SPEED,-10, -10, 10);// se retrage
-            encoderDrive(DRIVE_SPEED, 31, 31,3); // merge catre perete
+            encoderDrive(DRIVE_SPEED, 42, 42,3); // merge catre perete
         }
 
         else {
@@ -130,7 +130,7 @@ public class Autonomie_Depot extends LinearOpMode {
         }
 
         encoderDrive(DRIVE_SPEED, -10,10, 3); // se roteste pt a fi cu spatele la depot
-        EncoderStrafe(DRIVE_SPEED, 9, 9, 3); //merge catre perete pt a se alinia
+        EncoderStrafe(DRIVE_SPEED, 8, 8, 3); //merge catre perete pt a se alinia
         EncoderStrafe(-DRIVE_SPEED, -3,-3,3); // se intoarce pt a nu se bloca de perete
         encoderDrive(-DRIVE_SPEED, -55, -55, 10);
         robot.plasareMarker();
@@ -140,7 +140,7 @@ public class Autonomie_Depot extends LinearOpMode {
         //ExtendSucker (300); // parcheaza
 
 
-       // MineralPhase();
+        // MineralPhase();
 
 
         //ExtendSucker(200);
@@ -175,7 +175,7 @@ public class Autonomie_Depot extends LinearOpMode {
 
     private void MineralPhase()
     {
-       // encoderDrive(DRIVE_SPEED, 8, 8, 4);
+        // encoderDrive(DRIVE_SPEED, 8, 8, 4);
         robot.ExtendSucker(1050);
         sleep(500);
         robot.scuipare();
@@ -197,42 +197,42 @@ public class Autonomie_Depot extends LinearOpMode {
         }
 
         else
-            {
-                robot.ExtendSucker(-1050);
+        {
+            robot.ExtendSucker(-1050);
 
-                encoderDrive(DRIVE_SPEED, 14, 14, 4);
+            encoderDrive(DRIVE_SPEED, 14, 14, 4);
 
-                if (position == "LEFT")
-                    EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
-                else if (position == "RIGHT")
-                    EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
-
-
-                sleep(250);
-                robot.ExtendSucker(400);
-                //robot.flipDown();
-                sleep(250);
-                robot.sugere();
-                sleep(500);
-                robot.stopSugere();
-                sleep(250);
-                //robot.flipUp();
-                sleep(250);
-                robot.ExtendSucker(-250);
-
-                if (position == "LEFT")
-                    EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
-                else if (position == "RIGHT")
-                    EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
-
-                // encoderDrive(-DRIVE_SPEED, -10,-10,4);
-            }
+            if (position == "LEFT")
+                EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
+            else if (position == "RIGHT")
+                EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
 
 
+            sleep(250);
+            robot.ExtendSucker(400);
+            //robot.flipDown();
+            sleep(250);
+            robot.sugere();
+            sleep(500);
+            robot.stopSugere();
+            sleep(250);
+            //robot.flipUp();
+            sleep(250);
+            robot.ExtendSucker(-250);
+
+            if (position == "LEFT")
+                EncoderStrafe(-DRIVE_SPEED, -18, -18, 4);
+            else if (position == "RIGHT")
+                EncoderStrafe(DRIVE_SPEED, 18, 18, 4);
+
+            // encoderDrive(-DRIVE_SPEED, -10,-10,4);
+        }
 
 
 
-       // encoderDrive(DRIVE_SPEED,8,8,4);
+
+
+        // encoderDrive(DRIVE_SPEED,8,8,4);
         encoderDrive(DRIVE_SPEED, -15, 15,4);
         encoderDrive(DRIVE_SPEED, 46, 46, 4);
         encoderDrive(DRIVE_SPEED, -9, 9, 4);

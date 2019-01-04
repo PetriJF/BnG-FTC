@@ -97,7 +97,7 @@ public class TeleOP extends LinearOpMode {
 
         double Speed = gamepad1.left_stick_y;
         double Turn = gamepad1.left_stick_x;
-        double Strafe = gamepad1.right_stick_x;
+        double Strafe = -gamepad1.right_stick_x;
         if (Math.abs(Speed) <= minimumVelocity)
             Speed = 0f;
         if (Math.abs(Turn) <= minimumVelocity)
@@ -105,10 +105,10 @@ public class TeleOP extends LinearOpMode {
         if (Math.abs(Strafe) <= minimumVelocity)
             Strafe = 0f;
 
-         Turn = Range.scale(Math.abs(Turn), 0, 1,0, maxSpeed) * Math.signum(Turn);
-         Strafe = Range.scale(Math.abs(Strafe), 0, 1, 0, maxSpeed) * Math.signum(-Strafe);
-         Speed = Range.scale(Math.abs(Speed) * maxSpeed, 0, maxSpeed, 0, maxSpeed) * Math.signum(Speed);
-         robot.holonomic(Turn, Strafe, Speed);
+        Turn = Range.scale(Math.abs(Turn), 0, 1,0, maxSpeed) * Math.signum(Turn);
+        Strafe = Range.scale(Math.abs(Strafe), 0, 1, 0, maxSpeed) * Math.signum(-Strafe);
+        Speed = Range.scale(Math.abs(Speed) * maxSpeed, 0, maxSpeed, 0, maxSpeed) * Math.signum(Speed);
+        robot.holonomic(Turn, Strafe, Speed);
     }
     private void setSpeed()
     {

@@ -268,5 +268,4 @@ public class Robot {
     {
         marker.setPosition(0f);
     }
- }
-
+}

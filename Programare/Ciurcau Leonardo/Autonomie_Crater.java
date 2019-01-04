@@ -96,11 +96,11 @@ public class Autonomie_Crater extends LinearOpMode {
         waitForStart();
 
         StopTF();
-       // robot.coborare();
+        // robot.coborare();
         //MineralPhase();
         //robot.latching(1400);
-        //EncoderStrafe(DRIVE_SPEED, 3, 3, 3);
-        encoderDrive(DRIVE_SPEED,11, 11, 3);
+        //EncoderStrafe(DRIVE_SPEED, 3, 3, 5);
+        encoderDrive(DRIVE_SPEED,15, 15, 3);
         encoderDrive(DRIVE_SPEED, -21, 21, 3);
 
         if(position == "RIGHT")
@@ -109,7 +109,7 @@ public class Autonomie_Crater extends LinearOpMode {
             EncoderStrafe(DRIVE_SPEED, 20, 20, 3); // loveste cubul
             sleep(200);
             EncoderStrafe(-DRIVE_SPEED,-8, -8, 3); // se retrage
-            encoderDrive(DRIVE_SPEED,55, 55, 3); // merge catre perete
+            encoderDrive(DRIVE_SPEED,51, 51, 3); // merge catre perete
 
         }
 
@@ -119,7 +119,7 @@ public class Autonomie_Crater extends LinearOpMode {
             EncoderStrafe(DRIVE_SPEED, 25, 25, 3); // loveste cubul
             sleep(200);
             EncoderStrafe(-DRIVE_SPEED,-10, -10, 3);// se retrage
-            encoderDrive(DRIVE_SPEED, 31, 31,3); // merge catre perete
+            encoderDrive(DRIVE_SPEED, 42, 42,3); // merge catre perete
         }
 
         else {
@@ -131,13 +131,13 @@ public class Autonomie_Crater extends LinearOpMode {
         }
 
         encoderDrive(DRIVE_SPEED, 38,-38, 3); // se roteste pt a fi cu spatele la depot
-       // EncoderStrafe(DRIVE_SPEED, 9, 9, 3);
-        //EncoderStrafe(-DRIVE_SPEED, -3,-3,3); // se intoarce pt a nu se bloca de perete
-       // encoderDrive(-DRIVE_SPEED, -55, -55, 3);
+        EncoderStrafe(-DRIVE_SPEED, -8, -8, 3);
+        EncoderStrafe(DRIVE_SPEED, 3,3,3); // se intoarce pt a nu se bloca de perete
+        encoderDrive(-DRIVE_SPEED, -50,-50,5 ); // merge la depot
         robot.plasareMarker();
-        sleep(200);
+        sleep(500);
         robot.inchidereMarker(); // pune marker^
-        encoderDrive(DRIVE_SPEED, 63, 63, 4);// pleaca la crater
+        encoderDrive(DRIVE_SPEED, 50, 50, 4);// pleaca la crater
         //ExtendSucker (300); // parcheaza
 
 
@@ -287,10 +287,10 @@ public class Autonomie_Crater extends LinearOpMode {
                     }
 
 
-                        }
-                    }
                 }
             }
+        }
+    }
 
 
 
@@ -304,11 +304,11 @@ public class Autonomie_Crater extends LinearOpMode {
                              double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
-            robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
-            robot.motorLeft2.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorLeft2.setDirection(DcMotor.Direction.REVERSE);
 
-            robot.motorRight1.setDirection(DcMotor.Direction.FORWARD);
-            robot.motorRight2.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRight1.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRight2.setDirection(DcMotor.Direction.FORWARD);
 
 
         robot.motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -382,8 +382,8 @@ public class Autonomie_Crater extends LinearOpMode {
     }
 
     public void EncoderStrafe(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+                              double leftInches, double rightInches,
+                              double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
         robot.motorLeft1.setDirection(DcMotor.Direction.REVERSE);
